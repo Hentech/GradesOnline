@@ -1,0 +1,64 @@
+{% include 'macros.twig' %}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{{title}}</title>
+	{{ include_bootstrap() }}
+	<style type="text/css">
+		html, body {
+		  height: 100%;
+		}
+
+		#wrap {
+		  min-height: 100%;
+		  /*margin-bottom: 100px;*/
+		}
+
+		#main {
+		  overflow:auto;
+		  padding-bottom:150px; /* this needs to be bigger than footer height*/
+		}
+
+		.footer {
+		  position: relative;
+		  margin-top: -150px; /* negative value of footer height */
+		  height: 150px;
+		  clear:both;
+		  padding-top:20px;
+		  border-top: 1px solid #E7E7E7;
+		  background-color: #FAFAFA;
+		} 
+		img.img-spread{
+			width: 100%;
+
+		}
+	</style>
+	{{block('style')}}
+	{{ block('script') }}
+</head>
+<body>
+	<div id="wrap">
+		{{ create_navbar({ links:[{text:"Classes",url:"/classes"}], active:active}) }}
+		{{ block('top') }}
+		<div id="main" class="container clear-top">
+			{{ block('content')}}
+		</div>
+	</div>
+	<footer class="footer">
+		<div class="container">
+			<div class="col-md-3 col-md-offset-4">
+				<p class="text-primary">Contact</p>
+				<p class="text-info">henguin1001@gmail.com</p>
+			</div>
+			<div class="col-md-3">
+				<p class="text-primary">Developers</p>
+				<p><a class="text-info" href="/api">API</a></p>
+				<p><a class="text-info" href="">Gradeviewer on Github</a></p>
+
+			</div>
+		</div>
+		
+	</footer>
+</body>
+</html>

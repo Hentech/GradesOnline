@@ -1,0 +1,34 @@
+{% extends 'default.twig' %}
+{% include 'macros.twig' %}
+
+{% block top %}
+
+{% endblock %}
+{% block content %}
+	<div class="col-lg-6 col-lg-offset-3" style="margin-top: 50px;">
+		<form class="form-horizontal" method="post">
+		  <fieldset>
+		    <legend>Sign in to Gradeviewer.</legend>
+		    <div class="form-group">
+		      <label for="inputEmail" class="col-lg-2 control-label">Id</label>
+		      <div class="col-lg-10">
+		        <input type="text" class="form-control" name="user_id">
+			    <span class="help-block">The same login for bsd405.</span>
+		      </div>
+		    </div>
+		    <div class="form-group">
+		      <label for="inputPassword" class="col-lg-2 control-label">Password</label>
+		      <div class="col-lg-10">
+		        <input type="password" class="form-control" name="user_password">
+		      </div>
+		    </div>
+		    <div class="form-group">
+		      <div class="col-lg-10 col-lg-offset-2">
+		        <a href="/" class="btn btn-default">Cancel</a>
+		        <button type="submit" class="btn btn-primary">Go</button>
+		      </div>
+		    </div>
+		  </fieldset>
+		</form>
+	</div>
+{% endblock %}

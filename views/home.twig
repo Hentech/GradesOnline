@@ -1,0 +1,48 @@
+{% extends 'default.twig' %}
+{% include 'macros.twig' %}
+
+{% block top %}
+	<h1 align="center" style="font-family: 'Raleway', sans-serif;font-size:42px;padding: 100px 0px;">View your grades. <i>In style.</i></h1>
+{% endblock %}
+{% block content %}
+	<div class="row" style="padding: 25px inherit;">
+		<a href="/login" type="button" class="btn btn-default btn-lg btn-block">Sign In!</a>
+	</div>
+	<div class="page-header">
+		<h1>Testimonies</h1>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			<blockquote>
+			  <p>"I use Gradeviewer for all my gradebook viewing needs."</p>
+			  <small><cite title="Who said this">Henry Troutman</cite></small>
+			</blockquote>
+		</div>
+		<div class="col-md-6">
+			<blockquote>
+			  <p>"For all my gradebook viewing needs I use Gradeviewer."</p>
+			  <small><cite title="Who said this">Henry Troutman</cite></small>
+			</blockquote>
+		</div>
+	</div>
+	<div class="page-header">
+		<h1>What is Gradeviewer?</h1>
+	</div>
+	<div class="row">
+		<div class="col-lg-12">
+			<p class="lead">People ask me "What is Gradeviewer?" and I say, "how did you get into my house", also "It's pretty self-explanitory." <br> Gradeviewer is a new way for bsd405 students to view their grades just like the school gradebook but with alot of new features.</p>
+		</div>
+	</div>
+	<div class="page-header">
+		<h1>Who built Gradeviewer?</h1>
+	</div>
+	<div class="row">
+		<div class="col-lg-12">
+			<p class="lead">Funny you would ask that, It was me Henry Troutman, want to know more about this Henry Troutman fella' check out his <a>website</a>, If not check out <a href="http://www.fuckyouyoufuckingshit.com/">this</a>.</p>
+			<img class="img-spread" src="/images/me.jpg">
+			<p> You should like my fanpage.</p>
+		</div>
+	</div>
+
+
+{% endblock %}

@@ -1,0 +1,69 @@
+{% extends 'default.twig' %}
+{% include 'macros.twig' %}
+
+{% block style %} 
+	<style type = "text/css">
+	.accordian {
+
+	}
+	.accordian-content {
+		display: none;
+	}
+	.accordian-activate {
+
+	}
+	.gradepreview {
+
+	}
+	.gradepreview-activate {
+
+	}
+	.gradepreview-bar {
+		display: none;
+	}
+	.gradepreview-bar:first-child {
+		display: block;
+	} 
+</style>
+{% endblock %}
+{% block script %}
+	<script type="text/javascript" src="/javascripts/darken.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('.accordian').each(function(){
+				var accordian = $(this);
+				$(this).find('.accordian-activate').click(function(){
+					accordian.find('.accordian-content').slideToggle('slow');
+				});
+			});
+			$('.gradepreview').each(function(){
+				var gradepreview = $(this);
+				$(this).find('.gradepreview-activate').click(function(){
+					gradepreview.find('.gradepreview-bar').toggle();
+				});
+			});
+			$('.colorshift').each(function(){
+				var segments = $(this).find('.colorshift-target').length, range = 40;
+				if(segments == 0) return;
+
+				var shade = 0;
+				$(this).find('.colorshift-target').each(function(){
+					shade += 30/segments;
+					$(this).darken({percent:shade});
+				});
+			});
+		});
+		$(function () {
+	        $("[rel='tooltip']").tooltip();
+	    });
+	</script>
+
+{% endblock %}
+
+{% block content %}
+	<ul class="list-group ">
+		{% for class in classes %}
+		    {{ display_class(class) }}
+		{% endfor %}
+	</ul>
+{% endblock %}

@@ -146,7 +146,7 @@ exports.classes = function(req, res) {
 // pretty self-explainitory, hashs a string with sha1
 // might use salt in future
 function hash(string) {
-	return crypto.createHash('md5').update(string).digest("hex");
+	return crypto.createHash('sha1').update(string).digest("hex");
 }
 
 // creates an account base on user credentials 

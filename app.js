@@ -2,24 +2,30 @@
  * Module dependencies.
  */
 
-var express = require('express');
-var routes = require('./routes');
-var http = require('http');
-var path = require('path');
-var Twig = require('twig');
-var twig_fn = require('twig_fn.js');
+var express = require('express'),
+	routes = require('./routes'),
+	http = require('http'),
+	path = require('path');
+
+// templating library + custom extension
+var Twig = require('twig'),
+	twig_fn = require('twig_fn');
+Twig.extend(twig_fn);
+
 
 var app = express();
 
-Twig.extend(twig_fn);
 
 // all environments
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 80);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'twig');
 
+// cookies!
 app.use(express.cookieParser());
-app.use(express.session({secret: 'henryissupercool'}));
+app.use(express.session({
+	secret: 'henryissupercool'
+}));
 
 app.use(express.favicon());
 app.use(express.logger('dev'));
@@ -34,15 +40,29 @@ if ('development' == app.get('env')) {
 	app.use(express.errorHandler());
 }
 
+
+////////////
+// routes //
+////////////
+
+// loads the homepage
 app.get('/', routes.home);
 
+// loads the login page
 app.get('/login', routes.login);
+// allows for the password to be checked and subsequently logging in the user
 app.post('/login', routes.posts.login);
 
-app.get('/overview',routes.overview);
+// An overview of major grade changes in a given time
+// has yet to be implemented
+app.get('/overview', routes.overview);
 
-app.get('/classes',routes.classes);
+// the page in which you can view your enrolled classes and their grades
+app.get('/classes', routes.classes);
 
+///////////////
+// endroutes //
+///////////////
 
 http.createServer(app).listen(app.get('port'), function() {
 	console.log('Express server listening on port ' + app.get('port'));

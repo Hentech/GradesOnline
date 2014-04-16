@@ -41,6 +41,7 @@ Hen_db.prototype.getEntryById = function(database_name, document_id, callback) {
 	@method
 	@param database_name{string} name of the database
 	@param document_id {string} the identifier for the document
+	@param cumulate {boolean} will every field left undefined in the new data be removed 
 	@param data{object} the object holding the attributes to be transferred to the document
 	@param callback{function<err,body>} the function called with the results of the request
 		@err the errors resulting from the request

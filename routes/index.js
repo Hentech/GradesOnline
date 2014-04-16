@@ -133,6 +133,7 @@ exports.classes = function(req, res) {
 		} else {
 			// oops, something went wrong
 			// get out
+
 			req.session.user_id = undefined;
 			req.session.user_password = undefined;
 			res.redirect(NOT_AUTHORIZED_REDIRECT);
@@ -145,7 +146,7 @@ exports.classes = function(req, res) {
 // pretty self-explainitory, hashs a string with sha1
 // might use salt in future
 function hash(string) {
-	return crypto.createHash('sha1').update(string).digest("hex");
+	return crypto.createHash('md5').update(string).digest("hex");
 }
 
 // creates an account base on user credentials 
@@ -160,52 +161,57 @@ function createAccount(user_id, user_password) {
 // refresh data in database if the grade data is stale
 function manageSessionData(session, manageSessionDataCallback) {
 
-	// gathers all of the information about the users grades and puts them in the respective document
-	var updateData = function(user_id, user_password, updateDataCallback) {
-		var gradebook = new Gradebook(user_id, user_password);
-		// I might add this sort of sequence to the gradebook module, that is to gather class data and assignment data in one go
-		gradebook.startSession(function(err) {
-			// and error, better send that back to the callback
-			if (err) updateDataCallback(err);
-			else {
-				gradebook.getGrades(function(err, courses_original) {
-					if (!err) {
-						gradebook.getAssignments(courses_original, function(err, grades_assignments_data) {
-							if (!err) {
-								// all this new data, combine it into one object for storage
-								var courses = courses_original.map(function(element, index) {
-									element.firstSemester.assignments = grades_assignments_data[index].firstSemester;
-									element.secondSemester.assignments = grades_assignments_data[index].secondSemester;
-									return element;
-								});
-								// add the new data to the database
-								// by the way the 'true' allows for only the fields defined to be changed
-								// as to not delete everything else not defined
-								hen_db.updateById(USER_DB, user_id, true, {
-									courses: courses,
-									time: moment()
-								}, function(err) {
-									updateDataCallback(err);
-								});
-							} else updateDataCallback(err);
-						});
-					} else updateDataCallback(err);
-				});
-			}
 
-		});
-	};
 	// update data if it has been zero time, they just logged in probably
 	if (!session.time) {
-		session.time = moment();
 		updateData(session.user_id, session.user_password, manageSessionDataCallback);
+		session.time = moment();
+		return;
 	}
 	// find the time since the last update
 	var difference = moment().diff(session.time, 'minutes');
 	// if its longer than refresh time in minutes, update the data
 	if (difference > 30) {
-		session.time = moment();
 		updateData(session.user_id, session.user_password, manageSessionDataCallback);
+		session.time = moment();
+		return;
 	} else manageSessionDataCallback(undefined);
 
 }
+
+// gathers all of the information about the users grades and puts them in the respective document
+function updateData(user_id, user_password, updateDataCallback) {
+
+	var gradebook = new Gradebook(user_id, user_password);
+	// I might add this sort of sequence to the gradebook module, that is to gather class data and assignment data in one go
+	gradebook.startSession(function(err) {
+		// and error, better send that back to the callback
+		if (err) updateDataCallback(err);
+		else {
+			gradebook.getGrades(function(err, courses_original) {
+				if (!err) {
+					gradebook.getAssignments(courses_original, function(err, grades_assignments_data) {
+						if (!err) {
+							// all this new data, combine it into one object for storage
+							var courses = courses_original.map(function(element, index) {
+								element.firstSemester.assignments = grades_assignments_data[index].firstSemester;
+								element.secondSemester.assignments = grades_assignments_data[index].secondSemester;
+								return element;
+							});
+							// add the new data to the database
+							// by the way the 'true' allows for only the fields defined to be changed
+							// as to not delete everything else not defined
+							hen_db.updateById(USER_DB, user_id, true, {
+								courses: courses,
+								time: moment()
+							}, function(err) {
+								updateDataCallback(err);
+							});
+						} else updateDataCallback(err);
+					});
+				} else updateDataCallback(err);
+			});
+		}
+
+	});
+};

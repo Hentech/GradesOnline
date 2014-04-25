@@ -63,6 +63,7 @@ app.get('/classes', routes.classes);
 
 app.get('/signout',function(req,res){
 	req.session = {};
+	res.redirect('/login');
 });
 
 ///////////////

@@ -34,6 +34,12 @@ exports.posts = {};
 // when the user submits the login form
 var LOGIN_SUCCESS_REDIRECT = '/classes',
 	LOGIN_FAILURE_REDIRECT = '/login';
+
+exports.signout = function(req, res) {
+	req.session.user_id = undefined;
+	req.session.user_password = undefined;
+	res.redirect(LOGIN_FAILURE_REDIRECT);
+};
 exports.posts.login = function(req, res) {
 	// the data sent by the form
 	var loginInfo = req.body;

@@ -8,7 +8,7 @@ npm install
 node app.js
 ```
 
-Eventually this will be availible for use once I put it on a server of my own, I will post the url as soon as I do that.
+You can test it out [here](http://henrytroutman.com:8001), but beware it is not using https for the login for lack of funding.
 
 I would show images but my grades are bad, maybe someone could contribute, but currently you can see your classes with your grade described with a progress bar, upon clicking the "show" button a list of the respective class' assignments will appear and the progress bar will now contain divisions that represent the categories that make up your grade.
 There will soon be a page that will give you updates on either changes in any of your grades, an assignment being entered, and an assignment overdue.

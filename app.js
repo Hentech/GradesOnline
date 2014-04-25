@@ -60,6 +60,11 @@ app.get('/overview', routes.overview);
 // the page in which you can view your enrolled classes and their grades
 app.get('/classes', routes.classes);
 
+
+app.get('/signout',function(req,res){
+	req.session = {};
+});
+
 ///////////////
 // endroutes //
 ///////////////
